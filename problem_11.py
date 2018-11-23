@@ -66,7 +66,7 @@ max_total = 0
 
 for i in range(table_size):
     for j in range(table_size):
-        print("i = {}, j = {}".format(i, j))
+        # print("i = {}, j = {}".format(i, j))
         if j <= table_size - 4:
             total1 = input_list[i][j] * input_list[i][j+1] * input_list[i][j+2] * input_list[i][j+3]
         else:
@@ -88,7 +88,7 @@ for i in range(table_size):
             total4 = 0
 
         max_it = max(total1, total2, total3, total4)
-        print("1 = {}, 2= {}, 3 = {}, 4 = {}, max_it = {}".format(total1,total2,total3,total4,max_total))
+        # print("1 = {}, 2= {}, 3 = {}, 4 = {}, max_it = {}".format(total1,total2,total3,total4,max_total))
 
         if max_it > max_total:
             max_total = max_it
