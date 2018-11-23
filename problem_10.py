@@ -17,44 +17,32 @@ prime, with constant difference between them that is equal to that prime.[1] Thi
 from using trial division to sequentially test each candidate number for divisibility by each prime.[2]
 
 """
-# 20,000 rows = 0.33 seconds
-# 200,000 rows = 32.6 seconds
-# 400,000 rows = 254 seconds...
+# Answer = 142913828922
 
-import time
-
-start = time.time()
-
-below_num = 400000
-nums_to_check = range(2, below_num)
-max_to_check = max(nums_to_check)
-cur_num = min(nums_to_check)
-
-prime_list = []
+# Instantiate variables
+below_num = 2000000
+cur_num = 0
 total = 0
 
-while cur_num <= max_to_check:
+# Create a list of length below_num with all switched to "True"
+prime_list = [True for i in range(below_num)]
 
-    # print("To Check Pre {}".format(nums_to_check))
+# 0 and 1 are not prime (for final addition)
+prime_list[0] = prime_list[1] = False
 
-    # Add number to prime list
-    prime_list.append(cur_num)
-    # Create list of all multiples of current number
-    more_not_prime = list(range(cur_num, below_num, cur_num))
-    # print("More Not Prime = {}".format(more_not_prime))
-    # Remove multiples of current number from numbers to check
-    nums_to_check = list(set(nums_to_check) - set(more_not_prime))
-    # print("To Check Post {}".format(nums_to_check))
+# Check every position in list
+while cur_num < below_num:
 
-    if not nums_to_check:
-        break
-    else:
-        max_to_check = max(nums_to_check)
-        cur_num = min(nums_to_check)
-        # print(max_to_check)
-        # print(cur_num)
+    # If a number is prime, every multiple of that will not be. Switch those to "False"
+    if prime_list[cur_num]:
+        for i in range(cur_num * 2, below_num, cur_num):
+            prime_list[i] = False
 
-end = time.time()
+    cur_num += 1
 
-print(end - start)
-print(sum(prime_list))
+# Add up all positions with "True"
+for i in range(below_num):
+    if prime_list[i]:
+        total += i
+
+print(total)
