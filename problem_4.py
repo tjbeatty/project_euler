@@ -1,10 +1,10 @@
-'''
+"""
 A palindromic number reads the same both ways.
 The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 
-'''
+"""
 # Answer = 906609
 
 
@@ -29,7 +29,7 @@ max_same = 0
 factor_less = round(num_1 / 10)
 
 # Start with two numbers the same. Loop through number 2 until you identify a palindromic number and return. The reduce
-# number one and start process over, reversing through number 2. If palindomic number is larger than previous, save new.
+# number one and start process over, reversing through number 2. If palindrome number is larger than previous, save new.
 
 while num_1 >= factor_less:
 

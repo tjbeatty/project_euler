@@ -1,8 +1,8 @@
-'''
+"""
 By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
 
 What is the 10001st prime number?
-'''
+"""
 # Answer = 104743
 
 
@@ -20,12 +20,12 @@ def is_prime(number):
 
 
 count = 0
-i = 1
+j = 1
 
 # Run is_prime until it returns True 10,001 times
 while count < 10001:
-    i += 1
-    if is_prime(i):
+    j += 1
+    if is_prime(j):
         count += 1
 
-print(i)
+print(j)
