@@ -22,9 +22,13 @@ def is_prime(number):
 # Seed
 number = 600851475143
 
+
+# Start from 2 and try to divide. If number is evenly divisible, find other factor. If factor is prime, return.
 for i in range(2, number):
+
     if number % i == 0:
         other_num = number / i
+
         if is_prime(other_num):
             print(other_num)
             break

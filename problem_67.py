@@ -214,26 +214,42 @@ input_str = """59
 30 11 85 31 34 71 13 48 05 14 44 03 19 67 23 73 19 57 06 90 94 72 57 69 81 62 59 68 88 57 55 69 49 13 07 87 97 80 89 05 71 05 05 26 38 40 16 62 45 99 18 38 98 24 21 26 62 74 69 04 85 57 77 35 58 67 91 79 79 57 86 28 66 34 72 51 76 78 36 95 63 90 08 78 47 63 45 31 22 70 52 48 79 94 15 77 61 67 68
 23 33 44 81 80 92 93 75 94 88 23 61 39 76 22 03 28 94 32 06 49 65 41 34 18 23 08 47 62 60 03 63 33 13 80 52 31 54 73 43 70 26 16 69 57 87 83 31 03 93 70 81 47 95 77 44 29 68 39 51 56 59 63 07 25 70 07 77 43 53 64 03 94 42 95 39 18 01 66 21 16 97 20 50 90 16 70 10 95 69 29 06 25 61 41 26 15 59 63 35"""
 
+# --- Prepping the strings to do analysis
+
+# Convert large string to list of lists
 input_list = []
+
+# Break up string at new line chars
 for item in input_str:
     items = input_str.split("\n")
 
+# Break up string at spaces
 for term in items:
     input_list.append(term.split(" "))
 
+# Convert all strings to integers
 for i, row in enumerate(input_list):
     for j, col in enumerate(row):
         input_list[i][j] = int(col)
 
+# --- End prepping of string
+
+# Starting at second to last row and working your way backwards...
 for i in range(len(input_list) - 2, -1, -1):
 
+    # Move along each item in row and compare the two options to determine which is greater. Save greater value in row.
     for j in range(len(input_list[i])):
 
+        # If moving right is better, save that total sum in this row
         if input_list[i+1][j] > input_list[i+1][j+1]:
             input_list[i][j] += input_list[i+1][j]
+        # If moving left is better, save that total sum in this row
         else:
             input_list[i][j] += input_list[i+1][j+1]
 
+# After you have folded the entire triangle into a single value in top row, return value.
 print(input_list[0][0])
+
+
 
 

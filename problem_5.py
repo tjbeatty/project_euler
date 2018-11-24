@@ -13,12 +13,19 @@ flag = 0
 
 while flag == 0:
     break_flag = 0
+
+    # Start at 20 and go down, seeing if the number is divisible by all numbers 1 - 20
     for i in range(20, 1, -1):
+
+        # If number is not divisible by a value, break the loop and start again on next number.
         if number % i != 0:
+
+            # Number will have to be divisible by 20, so only check 20, 40, 60, etc.
             number += seed
             break_flag = 1
             break
 
+    # If the test made it all the way through 20 -> 1, print the number and stop loop
     if break_flag == 0:
 
         print(number)

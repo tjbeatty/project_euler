@@ -22,6 +22,7 @@ def is_prime(number):
 count = 0
 i = 1
 
+# Run is_prime until it returns True 10,001 times
 while count < 10001:
     i += 1
     if is_prime(i):

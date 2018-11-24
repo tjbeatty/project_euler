@@ -1,5 +1,6 @@
 '''
-By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.
+By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total
+from top to bottom is 23.
 
 3
 7 4
@@ -44,26 +45,40 @@ input_str = """75
 63 66 04 68 89 53 67 30 73 16 69 87 40 31
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"""
 
+# --- Prepping the strings to do analysis
+
+# Convert large string to list of lists
 input_list = []
+
+# Break up string at new line chars
 for item in input_str:
     items = input_str.split("\n")
 
+# Break up string at spaces
 for term in items:
     input_list.append(term.split(" "))
 
+# Convert all strings to integers
 for i, row in enumerate(input_list):
     for j, col in enumerate(row):
         input_list[i][j] = int(col)
 
+# --- End prepping of string
+
+# Starting at second to last row and working your way backwards...
 for i in range(len(input_list) - 2, -1, -1):
 
+    # Move along each item in row and compare the two options to determine which is greater. Save greater value in row.
     for j in range(len(input_list[i])):
 
+        # If moving right is better, save that total sum in this row
         if input_list[i+1][j] > input_list[i+1][j+1]:
             input_list[i][j] += input_list[i+1][j]
+        # If moving left is better, save that total sum in this row
         else:
             input_list[i][j] += input_list[i+1][j+1]
 
+# After you have folded the entire triangle into a single value in top row, return value.
 print(input_list[0][0])
 
 

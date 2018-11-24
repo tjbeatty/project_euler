@@ -7,18 +7,22 @@ By starting with 1 and 2, the first 10 terms will be:
 By considering the terms in the Fibonacci sequence whose values do not exceed four million,
 find the sum of the even-valued terms.
 '''
+
 # Answer = 4613732
 
 # Seed values
+max_value = 4000000
 cur_term = 2
 prev_term = 1
 total_even = 2
 
-while cur_term < 4000000:
+while cur_term < max_value:
+
     temp = cur_term
     cur_term = temp + prev_term
     prev_term = temp
 
+    # If current number is even, add it to the total
     if cur_term % 2 == 0:
         total_even += cur_term
 

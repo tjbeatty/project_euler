@@ -24,7 +24,8 @@ In the 20×20 grid below, four numbers along a diagonal line have been marked in
 
 The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
 
-What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
+What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally)
+in the 20×20 grid?
 '''
 
 input_str = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -50,46 +51,63 @@ input_str = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 
 # Answer = 70600674
 
+# Convert big input list into a list of lists. Where each row is its own list
 input_list = []
+
+# Split at new lines characters to get list of rows
 for item in input_str:
     items = input_str.split("\n")
 
+# Split at spaces to make each number its own item in the list
 for term in items:
     input_list.append(term.split(" "))
 
+# Convert every item from string to int
 for i, row in enumerate(input_list):
     for j, col in enumerate(row):
         input_list[i][j] = int(col)
 
+# Get the table rows size.
 table_size = len(input_list[0])
 max_total = 0
 
+# There are four different ways you can get a product of four numbers - across, down, diagonal right, diagonal left.
+# Find the four products possible for that position. Compare to max previously found.
+
+# Loop through each item in row
 for i in range(table_size):
+    # Loop through each row
     for j in range(table_size):
-        # print("i = {}, j = {}".format(i, j))
+
+        # Product from left to right. # If starting digit is too far right to get four number product, return 0
         if j <= table_size - 4:
             total1 = input_list[i][j] * input_list[i][j+1] * input_list[i][j+2] * input_list[i][j+3]
         else:
             total1 = 0
 
+        # Product from top down. # If starting digit is too far down to get four number product, return 0
         if i <= table_size - 4:
             total2 = input_list[i][j] * input_list[i+1][j] * input_list[i+2][j] * input_list[i+3][j]
         else:
             total2 = 0
 
+        # Product diagonal right. # If starting digit is too far right or down to get four number product, return 0
         if i <= table_size - 4 and j <= table_size - 4:
             total3 = input_list[i][j] * input_list[i+1][j+1] * input_list[i+2][j+2] * input_list[i+3][j+3]
-
         else:
             total3 = 0
+
+        # Product diagonal left. # If starting digit is too far left or down to get four number product, return 0
         if i <= table_size - 4 and j >= 3:
             total4 = input_list[i][j] * input_list[i+1][j-1] * input_list[i+2][j-2] * input_list[i+3][j-3]
         else:
             total4 = 0
 
+        # Take max of four products
         max_it = max(total1, total2, total3, total4)
         # print("1 = {}, 2= {}, 3 = {}, 4 = {}, max_it = {}".format(total1,total2,total3,total4,max_total))
 
+        # If product is bigger than all previous products, save
         if max_it > max_total:
             max_total = max_it
 

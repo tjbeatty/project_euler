@@ -18,8 +18,12 @@ sum_of_sq = 0
 sum_of_num = 0
 sq_of_sum = 0
 
+# Loop from 1 to 100
 for i in range(1, max_num + 1):
+
+    # Add square of number
     sum_of_sq += i ** 2
+    # Add number to total
     sum_of_num += i
 
 

@@ -51,6 +51,8 @@ str_number = "73167176531330624919225119674426574742355349194934" +\
 substr_len = 13
 max_product = 0
 
+# Run through first digit to 13th to last digit and find product of adjacent 13 digits. If product is greater than any
+# before, save as max product
 for i in range(len(str_number) - substr_len):
     product = 1
     for j in range(substr_len):
