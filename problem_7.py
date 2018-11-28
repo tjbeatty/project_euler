@@ -6,10 +6,11 @@ What is the 10001st prime number?
 # Answer = 104743
 
 
+# Not the most efficient prime finding algorithm, but it works for this use case.
 def is_prime(number):
     if number == 2:
         return True
-    elif number % 2 == 0:
+    elif number % 2 == 0 or number == 0 or number == 1:  # By definition 0 and 1 are not prime
         return False
     else:
         for i in range(2, int((number - 1) / 2)):
@@ -20,7 +21,7 @@ def is_prime(number):
 
 
 count = 0
-j = 1
+j = 0
 
 # Run is_prime until it returns True 10,001 times
 while count < 10001:

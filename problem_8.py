@@ -54,9 +54,15 @@ max_product = 0
 # Run through first digit to 13th to last digit and find product of adjacent 13 digits. If product is greater than any
 # before, save as max product
 for i in range(len(str_number) - substr_len):
+
     product = 1
+
+    # Run from current index to current index + substring length
     for j in range(substr_len):
+        # Came in as string, so make int to multiply
         product *= int(str_number[j + i])
+
+    # If product is bigger than any seen before, save as max product
     if product > max_product:
         max_product = product
 
