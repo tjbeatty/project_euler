@@ -28,7 +28,11 @@ def format_sudoku_matrices(file):
     # Open the file
 
     puzzle_file = open(file, "r")
-
+    # Separate out loading the data from the formatting
+    # Not handling errors. File might not exist
+    # Add exception handling - if no file, warn the user - something Craig looks at specifically when reviewing code
+    # Craig also looks for logging in code - debugging, info, warning, error, critical
+    
     sudoku_puzzle = []
 
     for line in puzzle_file:
