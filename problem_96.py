@@ -35,6 +35,7 @@ def format_sudoku_matrices(file):
         line = line[0:-2].split(",")
         sudoku_puzzle.append(line)
 
+    print(sudoku_puzzle)
     sudoku_rows = np.matrix(sudoku_puzzle).astype(int)
 
     sudoku_columns = sudoku_rows.transpose()
@@ -104,34 +105,35 @@ def box2col_map(box_i, box_j, pos_i, pos_j):
     return [x_pos, y_pos]
 
 
-def check_row(i, j, row_matrix, possibles_matrix):
+def remove_from_possibles(i, j, col, possibles):
+    """Removes items from list of possibles"""
+    for item in col:
+        if item in possibles[i,j]:
+            possibles[i, j].remove(item)
+
+
+def check_row(i, j, row_matrix, possibles):
     """ Check row for values. Remove values from possibles list, if present in row"""
     row_list = row_matrix[i].tolist()
 
-    for item in row_list[0]:
-        if item in possibles_matrix[i,j]:
-            possibles_matrix[i, j].remove(item)
+    remove_from_possibles(i, j, row_list[0], possibles)
 
 
-def check_col(i, j, col_matrix, possibles_matrix):
+def check_col(i, j, col_matrix, possibles):
     """ Check column for values. Remove values from possibles list, if present in column"""
     col_list = col_matrix[j].tolist()
 
-    for item in col_list[0]:
-        if item in possibles_matrix[i, j]:
-            possibles_matrix[i, j].remove(item)
+    remove_from_possibles(i, j, col_list[0], possibles)
 
 
-def check_box(i, j, box_matrix, possibles_matrix):
+def check_box(i, j, box_matrix, possibles):
     """ Check box for values. Remove values from possibles list, if present in box"""
 
     [box_x, box_y, box_pos_x, box_pos_y] = row2box_map(i, j)
     box_list = box_matrix[box_x, box_y].tolist()
     box_list = box_list[0] + box_list[1] + box_list[2]
 
-    for item in box_list:
-        if item in possibles_matrix[i, j]:
-            possibles_matrix[i, j].remove(item)
+    remove_from_possibles(i, j, box_list, possibles)
 
 
 def update_matrices(i, j, row_matrix, column_matrix, box_matrix, possibles):
@@ -145,6 +147,49 @@ def update_matrices(i, j, row_matrix, column_matrix, box_matrix, possibles):
         box_matrix[box_x, box_y][box_pos_x, box_pos_y] = possibles[i, j][0]
 
 
+def check_possibles_row(i, j, possibles):
+    """Check possibles for unique occurrence in row"""
+    possibles_temp = possibles[i, j]
+    other_possibles = []
+
+    for k, item in enumerate(possibles[i]):
+        if j == k:
+            pass
+        else:
+            if type(item) is list:
+                for l in item:
+                    other_possibles.append(l)
+            else:
+                other_possibles.append(item)
+
+    still_possible = list(set(possibles_temp) - set(other_possibles))
+
+    if len(still_possible) == 1:
+        possibles[i, j] = still_possible
+
+
+def check_possibles_col(i, j, possibles):
+    """Check possibles for unique occurrence in column"""
+    possibles_temp = possibles[i, j]
+    other_possibles = []
+    possible_trans = possibles.transpose()
+
+    for k, item in enumerate(possible_trans[j]):
+        if i == k:
+            pass
+        else:
+            if type(item) is list:
+                for l in item:
+                    other_possibles.append(l)
+            else:
+                other_possibles.append(item)
+
+    still_possible = list(set(possibles_temp) - set(other_possibles))
+
+    if len(still_possible) == 1:
+        possibles[i, j] = still_possible
+
+
 def check_one_same(i, j, row_matrix, column_matrix, box_matrix, possibles):
     """"Check col, check row, check box."""
     if row_matrix[i, j] != 0:
@@ -153,6 +198,8 @@ def check_one_same(i, j, row_matrix, column_matrix, box_matrix, possibles):
         check_row(i, j, row_matrix, possibles)
         check_col(i, j, column_matrix, possibles)
         check_box(i, j, box_matrix, possibles)
+        check_possibles_row(i, j, possibles)
+        check_possibles_col(i, j, possibles)
 
         update_matrices(i, j, row_matrix, column_matrix, box_matrix, possibles)
 
@@ -165,7 +212,7 @@ def check_all_same(row_matrix, column_matrix, box_matrix, possibles):
             check_one_same(i, j, row_matrix, column_matrix, box_matrix, possibles)
 
 
-filename = "prob96_files/puzzle_0.csv"
+filename = "prob96_files/puzzle_50_timmy.csv"
 
 [rows, columns, boxes] = format_sudoku_matrices(filename)
 
